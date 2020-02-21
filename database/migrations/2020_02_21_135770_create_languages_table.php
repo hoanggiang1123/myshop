@@ -14,8 +14,9 @@ class CreateLanguagesTable extends Migration
     public function up()
     {
         Schema::create('languages', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigIncrements('Id');
+            $table->string('Name',50);
+            $table->string('isDefault')->default('vn-vi');
         });
     }
 
