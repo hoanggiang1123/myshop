@@ -14,8 +14,14 @@ class CreateProductTranslationsTable extends Migration
     public function up()
     {
         Schema::create('product_translations', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+            $table->bigIncrements('Id');
+            $table->unsignedBigInteger('ProductId')->nullable();
+            $table->foreign('ProductId')->references('Id')->on('products')->onDelete('set null');
+            $table->string('Name',50);
+            $table->string('Description',50)->nullable();
+            $table->text('Details');
+            $table->unsignedBigInteger('LanguageId')->nullable();
+            $table->foreign('LanguageId')->references('Id')->on('languages')->onDelete('set null');
         });
     }
 
