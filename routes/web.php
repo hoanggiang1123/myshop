@@ -13,8 +13,8 @@
 $prefixAdmin = config('mycf.url.prefix_admin');
 
 Route::group(['prefix' => $prefixAdmin, 'namespace'=>'Backend'], function() {
-    $prefix = 'product';
-    $controllerName = 'product';
+    $prefix = 'category';
+    $controllerName = 'category';
     Route::group(['prefix'=> $prefix],function() use($controllerName) {
         $controllerName = ucfirst($controllerName).'Controller@';
         Route::get('/', ['as'=>$controllerName, 'uses'=>$controllerName.'index']);

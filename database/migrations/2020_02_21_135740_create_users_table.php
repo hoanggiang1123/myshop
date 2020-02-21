@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('FullName',50)->nullable();
             $table->dateTime('LastLoginDate')->nullable();
         });
+
+       
     }
 
     /**
