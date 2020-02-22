@@ -21,8 +21,12 @@ class CreateProductsTable extends Migration
             $table->integer('ViewCount')->default(0);
             $table->string('Name',50);
             $table->string('Description')->nullable();
+            $table->string('Details');
             $table->string('Slug',50)->unique();
             $table->string('Keyword')->nullable();
+            $table->string('ProductThumb')->nullable();
+            $table->string('ProductImg')->nullable();
+            $table->string('Status')->default('Inactive');
             $table->timestamps();
         });
     }
@@ -36,4 +40,4 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists('products');
     }
-}>
+}
