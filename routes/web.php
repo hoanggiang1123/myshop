@@ -18,15 +18,10 @@ Route::group(['prefix' => $prefixAdmin, 'namespace'=>'Backend'], function() {
     Route::group(['prefix'=> $prefix],function() use($controllerName) {
         $controller = ucfirst($controllerName).'Controller@';
         Route::get('/', ['as'=>$controllerName, 'uses'=>$controller.'index']);
-        Route::get('/form/{id?}', ['as'=>$controllerName.'/form', 'uses'=>$controller.'form']);
-        Route::get('/delete/{id}', ['as'=>$controllerName.'/delete', 'uses'=>$controller.'delete']);
-        Route::get('/show-home-{status}/{id}', ['as'=>$controllerName.'/showhome', 'uses'=>$controller.'showhome']);
-        Route::get('/change-display-{display}/{id}', ['as'=>$controllerName.'/display', 'uses'=>$controller.'display']);
-        Route::get('/change-status-{status}/{id}', ['as'=>$controllerName.'/status', 'uses'=>$controller.'status']);
-        Route::post('/change-status-multi', ['as'=>$controllerName.'/changeStatusMulti', 'uses'=>$controller.'changeStatusMulti']);
-        Route::post('/change-display-multi', ['as'=>$controllerName.'/changeDisplayMulti', 'uses'=>$controller.'changeDisplayMulti']);
-        Route::post('/change-ordering-multi', ['as'=>$controllerName.'/changeOrderingMulti', 'uses'=>$controller.'changeOrderingMulti']);
-        Route::post('/change-ishome-multi', ['as'=>$controllerName.'/changeIsHomeMulti', 'uses'=>$controller.'changeIsHomeMulti']);
-        Route::post('/delete-multi', ['as'=>$controllerName.'/deleteMulti', 'uses'=>$controller.'deleteMulti']);
+        Route::get('/form/{id?}', ['as'=>$controllerName.'/form', 'uses'=>$controller.'form'])->where('id','[0-9]+');
+        Route::get('/delete/{id}', ['as'=>$controllerName.'/delete', 'uses'=>$controller.'delete'])->where('id','[0-9]+');
+        Route::get('/change-ishome-{ishome}/{id}', ['as'=>$controllerName.'/ishome', 'uses'=>$controller.'ishome'])->where('id','[0-9]+');
+        Route::get('/change-status-{status}/{id}', ['as'=>$controllerName.'/status', 'uses'=>$controller.'status'])->where('id','[0-9]+');
+        Route::post('/bulk-action', ['as'=>$controllerName.'/bulkaction', 'uses'=>$controller.'bulkaction']);
     });
 });
