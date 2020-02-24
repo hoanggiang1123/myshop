@@ -22,11 +22,23 @@
             'status' => [
                 'active' => ['name'=> 'Bật', 'class'=>'btn btn-sm btn-success'],
                 'inactive' => ['name'=> 'Tắt', 'class'=>'btn btn-sm btn-danger'],
+            ],
+            'bulk_action' => [
+                'status_active' => ['name'=>'Change Status Active','type'=>'?type=status&val=active'],
+                'status_inactive' => ['name'=>'Change Status Inactive','type'=>'?type=status&val=inactive'],
+                'display' => ['name'=>'Change Display','type'=>'?type=display'],
+                'ishome_yes' => ['name'=>'Change Show Home','type'=>'?type=ishome&val=yes'],
+                'ishome_no' => ['name'=>'Change No Show Home','type'=>'?type=ishome&val=no'],
+                'ordering' => ['name'=>'Change Ordering','type'=>'?type=ordering'],
+                'del' => ['name'=>'Delete','type'=>'?type=del']
             ]
         ],
         'config' => [
             'button' => [
                 'category'  => ['edit', 'delete']
+            ],
+            'bulk_action'=> [
+                'category' =>['status_active','status_inactive', 'display','ishome_yes','ishome_no','ordering','del']
             ]
         ],
         'format' => [

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use DB;
 class CategoryController extends Controller
 {
    private $pathViewController = 'Backend.Pages.Category.';
@@ -22,40 +22,36 @@ class CategoryController extends Controller
 
    public function Index() {
 
+      return Category::groupBy(['Status'])
+      ->select( DB::raw('Status, COUNT(Id) as count') )->get();
+
       $items = $this->model->listItem(null,['task'=>'admin-list-item']);
-      // echo '<pre>';
-      // print_r($items);
-      // echo '</pre>';
-      // die;
+  
       return View($this->pathViewController.'Index',[
          'items'=> $items
       ]);
    }
-   public function changeDisplayMulti(Request $request) {
+   public function bulkaction(Request $request) {
+      
       $params = $request->all();
-      $ids = $params['cid'];
-      $vals = $params['display'];
-      foreach($ids as $key => $id) {
-         Category::find($id)->update(['Display'=>$vals[$key]]);
-      }
-      return redirect()->route('category');
+      $this->model->changeBulkActions($params);
+      return redirect()->route($this->controllerName);
    }
-   public function changeOrderingMulti(Request $request) {
-      $params = $request->all();
-      $ids = $params['cid'];
-      $vals = $params['ordering'];
-      foreach($ids as $key => $id) {
-         Category::find($id)->update(['Stt'=>$vals[$key]]);
-      }
-      return redirect()->route('category');
+   public function status(Request $request) {
+      $this->params['id'] = $request->id;
+      $this->params['status'] = $request->status;
+      $this->model->saveItem($this->params,['task'=>'change-status']);
+      return redirect()->route($this->controllerName);
    }
-   public function changeIsHomeMulti(Request $request) {
-      $params = $request->all();
-      $ids = $params['cid'];
-      $vals = $params['ishome'];
-      foreach($ids as $key => $id) {
-         Category::find($id)->update(['isHome'=>$vals[$key]]);
-      }
-      return redirect()->route('category');
+   public function ishome(Request $request) {
+      $this->params['id'] = $request->id;
+      $this->params['ishome'] = $request->ishome;
+      $this->model->saveItem($this->params,['task'=>'change-ishome']);
+      return redirect()->route($this->controllerName);
+   }
+   public function delete(Request $request) {
+      $this->params['id'] = $request->id;
+      $this->model->deleteItem($this->params,['task'=>'delete-single']);
+      return redirect()->route($this->controllerName);
    }
 }

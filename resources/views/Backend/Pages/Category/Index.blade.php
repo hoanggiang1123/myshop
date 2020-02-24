@@ -1,5 +1,9 @@
 @extends('Backend.master')
 @section('content')
+@php
+    use App\Helper\Template;
+    $bulkActions = Template::showBulkAction($controllerName,'category')
+@endphp
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -22,7 +26,40 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">DataTable with minimal features &amp; hover style</h3>
+                            <h3 class="card-title">Bo Loc Category</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="" class="btn btn-success">All</a>
+                                    <a href="" class="btn btn-info">InActive</a>
+                                    <a href="" class="btn btn-danger">Active</a>
+                                    <a href="" class="btn btn-warning">List</a>
+                                    <a href="" class="btn btn-primary">Grid</a>
+
+                                </div>
+                                <div class="col-4 ml-auto">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <button type="button" class="btn btn-warning btn-flat">Reset</button>
+                                        </span>
+                                        <input type="text" class="form-control">
+                                        <span class="input-group-append">
+                                            <button type="button" class="btn btn-info btn-flat">Search</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List of Catery</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -33,20 +70,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <div class="form-group">
-                                            <select class="form-control" name="bulk"  id="bulkaction">
-                                                <option value="">Bulk Action </option>
-                                                <option value="{{route($controllerName.'/changeStatusMulti')}}"> Change Status </option>
-                                                <option value="{{route($controllerName.'/changeDisplayMulti')}}"> Change Display </option>
-                                                <option value="{{route($controllerName.'/changeOrderingMulti')}}"> Change Ordering </option>
-                                                <option value="{{route($controllerName.'/changeIsHomeMulti')}}"> Change isHome </option>
-                                                <option value="{{route($controllerName.'/deleteMulti')}}"> Delete </option>
-                                            </select>
-                                        </div>
                                         
+                                        {!! $bulkActions !!}
+
                                     </div>
                                     <div class="col-2">
                                         <button href="javascript:;" type="button" disabled="disabled" class="btn btn-success" id="submit_bulk">Apply</button>
+                                    </div>
+                                    <div class="col-2 ml-auto text-right">
+                                        <a href="" class="btn btn-info">Add New</a>
                                     </div>
                                 </div>
                                 <div class="row">

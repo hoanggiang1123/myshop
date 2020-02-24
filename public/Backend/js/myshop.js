@@ -33,38 +33,32 @@ jQuery(document).ready(function($) {
         var checks = $('input.cball:checked');
         var link = $('#formpost').attr('action');
         var className = getClassOfInput(link);
+      
         if(checks.length) {
             checks.each(function() {
-                var input = $(this).parent().parent().parent().find(`.${className}`)[0];
-                $(input).attr('name', className+"[]");
+                if(className != 'del') {
+                    var input = $(this).parent().parent().parent().find(`.${className}`)[0];
+                    $(input).attr('name', className+"[]");
+                }
             })
+            $('#formpost').submit();
+        } else {
+            alert('Vui long Chon CheckBox'); 
         }
-        $('#formpost').submit();
+        
+        
     });
     $('#customSwitch1').click(function() {
         console.log($(this).val());
     })
     function getClassOfInput(link) {
-        var path = link.split('/').pop();
-        var className = '';
-        switch(path) {
-            case 'change-display-multi':
-                className = 'display';
-                break;
-            case 'change-status-multi':
-                className = 'status';
-                break;
-            case 'change-ordering-multi':
-                className = 'ordering';
-                break;
-            case 'change-ishome-multi':
-                className = 'ishome';
-                break;
-            case 'delete-multi':
-                className = 'del';
-                break;
+        var path = link.split('?').pop();
+        if(path.includes('&')) {
+            var className = path.split('&');
+            return  className[0].split('=').pop();
+        } else {
+            return path.split('=').pop();
         }
-        return className;
     }
     function resetNameAttr() {
         $('.commom').each(function() {

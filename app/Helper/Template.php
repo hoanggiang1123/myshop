@@ -16,7 +16,7 @@ class Template {
         $html = '';
         foreach($listBtn as $btn) {
             $currentBtn = $templateBtn[$btn];
-            $link = route($controllerName.$currentBtn['route-name'],['id'=>$id]);
+            $link = route($controllerName.$currentBtn['route-name'],['id'=>(int)$id]);
             $html.= sprintf('<a href="%s" class="%s">%s</a>',$link,$currentBtn['class'],$currentBtn['title']);
         }
         return $html;
@@ -26,15 +26,15 @@ class Template {
         $isHome = (array_key_exists($isHome,$templateIsHome)) ? $isHome: 'yes';
         $currentIsHome = $templateIsHome[$isHome];
         $isHome = ($isHome == 'yes') ? 'no': 'yes';
-        $link = route($controllerName.'/showhome',['status'=>$isHome,'id'=>$id]);
+        $link = route($controllerName.'/ishome',['ishome'=>$isHome,'id'=>$id]);
         
         return sprintf('<a href="%s" class="%s">%s</a><input class="ishome commom" type="hidden" value="%s" />',$link, $currentIsHome['class'], $currentIsHome['name'],$isHome);
     }
     public static function showSelectDisplay($controllerName,$display,$id,$fieldName) {
-        $link = route($controllerName.'/'.$fieldName,[$fieldName=>'new_value','id'=>$id]);
+        //$link = route($controllerName.'/'.$fieldName,[$fieldName=>'new_value','id'=>$id]);
         $templateSelectDisplay = Config::get('mycf.template.'.$fieldName);
         $display = (array_key_exists($display,$templateSelectDisplay)) ? $display: 'list';
-        $html = sprintf('<div class="form-group"><select class="form-control display commom"  data-url="%s">', $link);
+        $html = '<div class="form-group"><select class="form-control display commom">';
 
         foreach($templateSelectDisplay as $key => $dp) {
             $selected = '';
@@ -72,5 +72,18 @@ class Template {
         <input type="checkbox" value="%s" name="cid[]" id="check%s" class="cball">
         <label for="check%s"></label>
         </div>', $id,$id,$id);
+    }
+    public static function showBulkAction($controllerName,$type) {
+        $listBulks = Config::get('mycf.template.bulk_action');
+        $configBulks = Config::get('mycf.config.bulk_action');
+        $currentConfigs = $configBulks[$type];
+        $html = '<div class="form-group"><select class="form-control" name="bulk"  id="bulkaction"><option value="">Bulk Action </option>';
+        foreach($currentConfigs as $config) {
+            $link = route($controllerName.'/bulkaction').$listBulks[$config]['type'];
+            $name = $listBulks[$config]['name'];
+            $html.= sprintf('<option value="%s">%s</option>',$link,$name);
+        }
+        $html.= '</select></div>';
+        return $html;
     }
 }
